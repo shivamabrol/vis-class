@@ -5,7 +5,7 @@ Projects/Assignments will be uploaded here
 
 
 --------Project 1 update-------
-Copied all the data for Hamilton county and visualization 1 is working by EOD today I'd like to finish up with the stacked data implementation of 
+Downloaded all the data for Hamilton county and visualization 1 is working by EOD today I'd like to finish up with the stacked data implementation of 
 all the polutants.
 
 
