@@ -1,4 +1,4 @@
-ID,State,County,Year,Days with AQI,Good Days,Moderate Days,Unhealthy for Sensitive Groups Days,Unhealthy Days,Very Unhealthy Days,Hazardous Days,MaxAQI,Percentile90AQI,MedianAQI,DaysCO,DaysNO2,DaysOzone,DaysSO2,DaysPM2.5,DaysPM10
+ID,State,County,Year,Days with AQI,Good Days,Moderate Days,Unhealthy for Sensitive Groups Days,Unhealthy Days,Very Unhealthy Days,Hazardous Days,MaxAQI,Percentile90AQI,MedianAQI,DaysCO,DaysNO2,DaysOzone,DaysSO2,DaysPM25,DaysPM10
 150,Indiana,Hamilton,1985,123,60,46,13,4,0,0,190,112,51,0,0,123,0,0,0
 425,Ohio,Hamilton,1985,365,30,125,192,17,1,0,210,139,105,2,34,36,293,0,0
 521,Tennessee,Hamilton,1985,365,260,78,22,5,0,0,177,93,40,0,0,365,0,0,0

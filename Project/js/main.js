@@ -3,7 +3,6 @@ console.log("Hello world");
 d3.csv('data/hamilton.csv')
   .then(data => {
   	console.log('Data loading complete. Work with dataset.');
-    // console.log(data);
 
     // //process the data - this is a forEach function.  You could also do a regular for loop.... 
     // data.forEach(d => { //ARROW function - for each object in the array, pass it as a parameter to this function
@@ -19,49 +18,87 @@ d3.csv('data/hamilton.csv')
     //lets compute costs per year for the line chart
   	let minYear = d3.min( data, d => d.Year);
   	let maxYear = d3.max( data, d=> d.Year );
+// 1980 to 2021
+  	let combinedData = []; //this will be our data for the line chart
+  	// CO, NO2, Ozone, SO2, PM2.5, PM10
+	// DaysCO,DaysNO2,DaysOzone,DaysSO2,DaysPM2.5,DaysPM10
 
-  	let medianData = []; //this will be our data for the line chart
-  	let perData = []; //this will be our data for the line chart
-	let maxData = []; //this will be our data for the line chart
-  	for(let i = minYear; i < maxYear; i++){
+	// let daysCOData = []
+	
+	// for(let i = minYear; i < maxYear; i++){
 
-  		let justThisYear = data.filter( d => d.Year == i ); //only include the selected year
-  		let medianAQI = d3.sum(justThisYear, d => d.MedianAQI); //sum over the filtered array, for the cost field
-  		let percentile90AQI = d3.sum(justThisYear, d => d.Percentile90AQI); //sum over the filtered array, for the cost field
-  		let maxAQI = d3.sum(justThisYear, d => d.MaxAQI); //sum over the filtered array, for the cost field
-  		medianData.push({"year": i, "value":medianAQI});
-  		perData.push({"year": i, "value":maxAQI});
-  		maxData.push({"year": i, "value":percentile90AQI});
-  	}
+  	// 	let justThisYear = data.filter( d => d.Year == i ); //only include the selected year
+  	// 	let medianAQI = d3.sum(justThisYear, d => d.MedianAQI); //sum over the filtered array, for the cost field
+  	// 	let percentile90AQI = d3.sum(justThisYear, d => d.Percentile90AQI); //sum over the filtered array, for the cost field
+  	// 	let maxAQI = d3.sum(justThisYear, d => d.MaxAQI); //sum over the filtered array, for the cost field
+	// 	// let CO = data.filter( d => d.DaysCO > 0)
+	// 	let COdata = d3.sum(justThisYear, d => d.DaysCO);
+	// 	let NO2data = d3.sum(justThisYear, d => d.DaysNO2);
+	// 	let OzoneData = d3.sum(justThisYear, d => d.DaysOzone);
+	// 	let SO2Data = d3.sum(justThisYear, d => d.DaysSO2);
+	// 	let PM25Data = d3.sum(justThisYear, d => d.DaysPM25);
+	// 	let PM10Data = d3.sum(justThisYear, d => d.DaysPM10);
+	// 	daysCOData.push({"year": i, "CO":COdata, "CO":COdata, "NO2":NO2data,
+	// 	"Ozone":OzoneData, "SO2":SO2Data, "PM25":PM25Data, "PM10":PM10Data})
+	// 	medianData.push({"year": i, "value":medianAQI});
+  	// 	perData.push({"year": i, "value":maxAQI});
+  	// 	maxData.push({"year": i, "value":percentile90AQI});
+  	// }
+	
+	for(let i = minYear; i <= maxYear; i++) {
+		let justThisYear = data.filter( d => d.Year == i ); //only include the selected year
+		let medianAQI = d3.sum(justThisYear, d => d.MedianAQI); //sum over the filtered array, for the cost field
+		combinedData.push({"year": i, "value":medianAQI, "type": "median"}); 
+	}
+
+	for(let i = minYear; i <= maxYear; i++) {
+		let justThisYear = data.filter( d => d.Year == i ); //only include the selected year
+		let percentile90AQI = d3.sum(justThisYear, d => d.Percentile90AQI); //sum over the filtered array, for the cost field
+		combinedData.push({"year": i, "value":percentile90AQI, "type": "percent"}); 
+	}
+
+	for(let i = minYear; i <= maxYear; i++) {
+		let justThisYear = data.filter( d => d.Year == i ); //only include the selected year
+		let maxAQI = d3.sum(justThisYear, d => d.MaxAQI); //sum over the filtered array, for the cost field
+		combinedData.push({"year": i, "value":maxAQI, "type": "max"}); 
+	}
+
 	
 	// console.log(costsPerYear)
 
 		//TO DO:  Make a line chart object.  Make it 200 pixels tall by 1000 pixels wide. 
 		//Be sure to send it the costsPerYear data 
 		// The svg for this element has already been created in index.html, above the timeline circles- check it out
+		
+		
 		let med = new Line({
 			
 			'parentElement': '#line',
-
+			'color': 'blue',
 			'containerHeight': 300,
-            'containerWidth': 300
-		}, medianData);
+            'containerWidth': 600
+		}, combinedData);
 
-		let per = new Line({
+		// let per = new Line({
 			
-			'parentElement': '#line',
+		// 	'parentElement': '#line',
+		// 	'color': 'red',
+		// 	'containerHeight': 300,
+        //     'containerWidth': 300
+		// }, [perData]);
 
-			'containerHeight': 300,
-            'containerWidth': 300
-		}, perData);
-
-		let max = new Line({
+		// let max = new Line({
 			
-			'parentElement': '#line',
+		// 	'parentElement': '#line',
+		// 	'color': 'yellow',
+		// 	'containerHeight': 300,
+        //     'containerWidth': 300
+		// }, [maxData]);
 
-			'containerHeight': 300,
-            'containerWidth': 300
-		}, maxData);
+		// let stackedBarChart = 
+		//   new StackedBarChart({ parentElement: '#chart'}, daysCOData);
+
+		//   // Create chart
 
 })
 .catch(error => {

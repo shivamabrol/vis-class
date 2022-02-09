@@ -1,13 +1,12 @@
 class Line {
-
   constructor(_config, _data) {
     this.config = {
       parentElement: _config.parentElement,
       containerWidth: _config.containerWidth || 500,
       containerHeight: _config.containerHeight || 140,
+    //   color: _config.color || "blue",
       margin: { top: 10, bottom: 30, right: 50, left: 50 }
     }
-
     this.data = _data;
 
     // Call a class function
@@ -18,17 +17,21 @@ class Line {
       
     let vis = this; //this is a keyword that can go out of scope, especially in callback functions, 
                     //so it is good to create a variable that is a reference to 'this' class instance
-
+    // console.log(vis.config.color)
     //set up the width and height of the area where visualizations will go- factoring in margins               
     vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right;
     vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom;
+    console.log(vis.data)
+
+    vis.colorPalette = d3.scaleOrdinal(d3.schemeTableau10);
+    vis.colorPalette.domain( "median", "percent",  "max");
 
     //reusable functions for x and y 
         //if you reuse a function frequetly, you can define it as a parameter
         //also, maybe someday you will want the user to be able to re-set it.
     vis.xValue = d => d.year; 
     vis.yValue = d => d.value
-    vis
+    vis.groups = d3.group(vis.data, d => d.type);
 
     //setup scales
     vis.xScale = d3.scaleLinear()
@@ -76,15 +79,15 @@ class Line {
     // NOTE:   .data([vis.data])  needs to be structured like this
     //  Set the fill to  '#e9eff5'
     // using the helper function: .attr('d', vis.area);
-    vis.area = d3.area()
-    	.x(d => vis.xScale(vis.xValue(d)))
-	.y1(d => vis.yScale(vis.yValue(d)))
-	.y0(vis.height)
+    // vis.area = d3.area()
+    // 	.x(d => vis.xScale(vis.xValue(d)))
+	// .y1(d => vis.yScale(vis.yValue(d)))
+	// .y0(vis.height)
     
-    vis.chart.append('path')
-	.data([vis.data])
-	.attr('fill', '#e9eff5')
-	.attr('d', vis.area);
+    // vis.chart.append('path')
+	// .data([vis.data])
+	// .attr('fill', '#e9eff5')
+	// .attr('d', vis.area);
 
 
     //TO DO- create a line path 
@@ -102,14 +105,31 @@ class Line {
     // fill should be 'none'
     // stroke width should be 2 
     // using the helper function: .attr('d', vis.line);
-    vis.chart.append('path')
-	.data([vis.data]) 
-	.attr('stroke', '#8693a0')
-    .transition()
-    .duration(2000)
-	.attr('fill', 'none')
-	.attr('stroke-width', 2)
-	.attr('d', vis.line);
+    // console.log(this.color)
+
+//add buttons to show individual charts
+    vis.chart.selectAll(".line")
+    .data(vis.groups)
+    .join("path")
+        .attr('stroke', (d) => vis.colorPalette(d[0]))
+        .attr('fill', 'none')
+        .attr('stroke-width', 2)
+        .attr('d', function(d){
+            return d3.line()
+                .x(function(d){return vis.xScale(d.year);})
+                .y(function(d) { return vis.yScale(d.value);})
+                (d[1])
+    });
+
+    // vis.chart.append('path')
+	// .data([vis.data]) 
+	// .attr('stroke', '#8693a0')
+    // .transition()
+    // .duration(2000)
+	// .attr('fill', 'none')
+	// .attr('stroke-width', 1)
+    // .attr("stroke", vis.config.color)
+	// .attr('d', vis.line);
 
 
 
