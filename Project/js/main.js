@@ -77,6 +77,13 @@ d3.csv('data/hamilton_ohio.csv')
 			'containerWidth': 500
 		}, data2021);
 
+		// let nc = new NewFile({
+		// 	'parentElement': '#my_dataviz',
+		// 	'color': 'blue',
+		// 	'containerHeight': 1000,
+		// 	'containerWidth': 1000
+		// }, data2021);
+
 	})
 	.catch(error => {
 		console.error(error);

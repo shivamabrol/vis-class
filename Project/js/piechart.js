@@ -36,19 +36,25 @@ class PieChart {
     console.log(data_ready)
     
     // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
-    svg
-      .selectAll('whatever')
-      .data(data_ready)
-      .join('path')
-      .attr('d', d3.arc()
-        .innerRadius(20)
-        .outerRadius(50)
-      )
-      .attr('cx', 1000)
-      .attr('cy', 500)
-      .attr('fill', function(d){ return(color(d.data[1])) })
-      .attr("stroke", "black")
-      .style("stroke-width", "2px")
-      .style("opacity", 0.7)
+    // shape helper to build arcs:
+
     }
-}
+    // svg
+    // .selectAll('mySlices')
+    // .data(data_ready)
+    // .enter()
+    // .append('path')
+    //   .attr('d', function(d){
+    //       return d3.arc()
+    //             .innerRadius(10)
+    //             .outerRadius(200)
+    //             .startAngle(d.startAngle)
+    //             .endAngle(d.endAngle)
+    //   })
+    //   .attr('fill', 'black')
+    //   .attr("stroke", "black")
+    //   .style("stroke-width", "2px")
+    //   .style("opacity", 0.7)
+
+    
+} 
