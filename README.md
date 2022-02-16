@@ -3,6 +3,10 @@ All the stuff for vis class
 Projects/Assignments will be uploaded here
 
 
+---------Project 1 update----------
+All components seem to be working fine
+Have to do fine tweaking to make it more presentable
+The only problem is I'm not able to align them on the page perfectly which might be something of an issue
 
 --------Project 1 update-------
 Downloaded all the data for Hamilton county and visualization 1 is working by EOD today I'd like to finish up with the stacked data implementation of 
